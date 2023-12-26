@@ -1,0 +1,58 @@
+---
+import NavItem from "./nav-item.astro";
+---
+
+<div class="flex flex-col lg:hidden">
+	<div class="w-full flex justify-between py-5 px-2" id="menuBar">
+		<a
+			class="font-semibold hover:opacity-75 px-3 rounded-full transition-opacity"
+			href="/">Home</a
+		>
+		<button
+			class="font-semibold hover:opacity-75 px-3 rounded-full transition-opacity"
+			id="menuButton">Menu</button
+		>
+	</div>
+	<ul
+		class="flex-col gap-y-7 font-light font-sans bg-black text-lg px-2 py-5 hidden"
+		id="menu"
+	>
+		<NavItem title="1:1 Coaching" href="https://calendly.com/sburada/30min" />
+		<NavItem title="YouTube" href="https://www.youtube.com/@SandeshBurada" />
+		<NavItem
+			title="Linked In"
+			href="https://www.linkedin.com/in/sandeshburada/"
+		/>
+		<NavItem
+			class="text-secondary font-semibold"
+			title="Private Community"
+			href=""
+		/>
+	</ul>
+</div>
+
+<script>
+	import { menuOpen } from "../../store";
+
+	const menuButton = document.querySelector("#menuButton");
+	const menuBar = document.querySelector("#menuBar");
+	const menu = document.querySelector("#menu");
+
+	menuOpen.subscribe((open) => {
+		if (open) {
+			menu?.classList.add("flex");
+			menuBar?.classList.add("bg-black");
+			menu?.classList.remove("hidden");
+		} else {
+			menu?.classList.add("hidden");
+			menu?.classList.remove("flex");
+			menuBar?.classList.remove("bg-black");
+		}
+	});
+
+	function menuToggle() {
+		menuOpen.set(!menuOpen.get());
+	}
+
+	menuButton?.addEventListener("click", () => menuToggle());
+</script>
